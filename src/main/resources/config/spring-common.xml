@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!-- 注解扫描包 -->
+    <!--<context:component-scan base-package="com.ssm.demo"/>-->
+
+    <!--1 引入属性文件，在配置中占位使用 -->
+    <context:property-placeholder location="classpath:*.properties"/>
+
+    <!--2 配置C3P0数据源 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialPoolSize" value="${c3p0.initialPoolSize}"/>
+        <property name="acquireIncrement" value="${c3p0.acquireIncrement}"/>
+        <property name="maxPoolSize" value="${c3p0.maxPoolSize}"/>
+        <property name="minPoolSize" value="${c3p0.minPoolSize}"/>
+        <!--<property name="autoCommitOnClose" value="${c3p0.autoCommitOnClose}"/>-->
+        <!--<property name="checkoutTimeout" value="${c3p0.checkoutTimeout}"/>-->
+        <!--<property name="acquireRetryAttempts" value="${c3p0.acquireRetryAttempts}"/>-->
+    </bean>
+
+    <!--3 会话工厂bean sqlSessionFactoryBean -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 扫描model包 使用别名 -->
+        <!--<property name="typeAliasesPackage" value="com.ssm.demo.entity"/>-->
+        <!-- 扫描sql配置文件:mapper需要的xml文件 -->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+    </bean>
+
+    <!--4 自动扫描对象关系映射 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 指定会话工厂，如果当前上下文中只定义了一个则该属性可省去 -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!-- 指定要自动扫描接口的基础包，实现接口 -->
+        <property name="basePackage" value="com.ssm.demo.dao"/>
+    </bean>
+
+    <!--5 声明式事务管理 -->
+    <!--定义事物管理器，由spring管理事务 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!-- 注入数据库连接池 -->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 配置基于注解的声明式事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- 配置事务传播特性-->
+    <!-- 表示将事务应用到以tx开头的方法上。propagation="REQUIRED"代表支持当前事务，如果当前没有事务，就新建一个事务 -->
+    <tx:advice id = "TxAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="tx*" propagation="REQUIRED"/>
+            <tx:method name="*" propagation="REQUIRED" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 配置参与事务的类 -->
+    <aop:config>
+        <aop:pointcut id="allTxMethod" expression="execution(* com.ssm.demo.service.*.*(..))"/>
+        <!--<aop:pointcut id="allTxMethod2" expression="execution(* com.ssm.demo.service.*.*(..))"/>-->
+        <aop:advisor advice-ref="TxAdvice" pointcut-ref="allTxMethod"/>
+        <!--<aop:advisor advice-ref="TxAdvice" pointcut-ref="allTxMethod2"/>-->
+    </aop:config>
+
+    <!-- 定时任务 -->
+    <!--<import resource="classpath:quartz.xml"/>-->
+
+    <!--6 容器自动扫描IOC组件  -->
+    <!--<context:component-scan base-package="com.zhangguo.bookstore"></context:component-scan>-->
+
+    <!--7 aspectj支持自动代理实现AOP功能 -->
+    <!--<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>-->
+
+</beans>
