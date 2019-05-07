@@ -185,4 +185,9 @@
       createTime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="query" resultMap="BaseResultMap">
+    select * from user_data
+    where recordTime >= #{begin} and #{end} > recordTime and moduleId = #{moduleId}
+  </select>
 </mapper>

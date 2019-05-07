@@ -15,4 +15,12 @@ public class Constant {
 
     /** 数字1 */
     public static final int COUNT1 = 1;
+
+    /** 一天的秒数 */
+    public static final long ONE_DAY_IN_SECOND = 86400;
+
+    /** 紫外线标签 */
+    public static final String SUN_LABEL = "sun_data";
+    /** 运动标签 */
+    public static final String SPORT_LABEL = "sport_data";
 }

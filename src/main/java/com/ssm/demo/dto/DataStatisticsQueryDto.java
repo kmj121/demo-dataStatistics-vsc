@@ -18,9 +18,9 @@ public class DataStatisticsQueryDto {
     @ApiModelProperty(value = "日期(以天为单位)", example = "2019-02-20", required = true)
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date dayTime;
-    @ApiModelProperty(value = "日期(以小时为单位)", example = "2019-02-20 10", required = true)
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private Date hourTime;
+//    @ApiModelProperty(value = "日期(以小时为单位)", example = "2019-02-20 10", required = true)
+//    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+//    private Date hourTime;
     @ApiModelProperty(value = "设备号", required = true)
     @NotNull
     @NotEmpty
@@ -34,13 +34,13 @@ public class DataStatisticsQueryDto {
         this.dayTime = dayTime;
     }
 
-    public Date getHourTime() {
-        return hourTime;
-    }
-
-    public void setHourTime(Date hourTime) {
-        this.hourTime = hourTime;
-    }
+//    public Date getHourTime() {
+//        return hourTime;
+//    }
+//
+//    public void setHourTime(Date hourTime) {
+//        this.hourTime = hourTime;
+//    }
 
     public String getModuleId() {
         return moduleId;

@@ -3,8 +3,10 @@ package com.ssm.demo.controller;
 import com.ssm.demo.common.MessageCode;
 import com.ssm.demo.common.ResultObject;
 import com.ssm.demo.dto.DataStatisticsQueryDto;
+import com.ssm.demo.service.DataStatisticsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +27,13 @@ import javax.validation.Valid;
 @Api(tags = {"数据统计"})
 @RequestMapping(value = "/dataStatistics")
 public class DataStatisticsController {
+    @Autowired
+    private DataStatisticsService dataStatisticsService;
 
     @ApiOperation(value = "数据查询")
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     @ResponseBody
     public ResultObject query(HttpServletRequest request, @RequestBody @Valid DataStatisticsQueryDto dto) {
-        return new ResultObject(MessageCode.CODE_SUCCESS, null);
+        return new ResultObject(MessageCode.CODE_SUCCESS, dataStatisticsService.query(dto));
     }
 }

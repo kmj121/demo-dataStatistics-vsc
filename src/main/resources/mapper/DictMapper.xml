@@ -138,4 +138,8 @@
       del_flag = #{delFlag,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getValue" resultType="java.lang.String">
+    select value from dict where label = #{label}
+  </select>
 </mapper>
