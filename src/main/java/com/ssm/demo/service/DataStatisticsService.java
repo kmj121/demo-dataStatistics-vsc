@@ -5,6 +5,8 @@ import com.ssm.demo.dao.DictMapper;
 import com.ssm.demo.dao.UdpDataMapper;
 import com.ssm.demo.dto.DataStatisticsQueryDto;
 import com.ssm.demo.dto.DataStatisticsQueryDtoOut;
+import com.ssm.demo.dto.DataStatisticsQueryListDtoOut;
+import com.ssm.demo.dto.ExportDto;
 import com.ssm.demo.entity.UdpData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -144,5 +146,13 @@ public class DataStatisticsService {
             dVar += (x[i] - dAve) * (x[i] - dAve);
         }
         return dVar / m;
+    }
+
+    public List<UdpData> listExport(ExportDto dto) {
+        //日期（2019-01-01）转化为精确到秒的时间戳
+        long begin = dto.getDayTime().getTime() / 1000;
+        long end = begin + Constant.ONE_DAY_IN_SECOND;
+        List<UdpData> list = udpDataMapper.query(begin, end, dto.getModuleId());
+        return list;
     }
 }

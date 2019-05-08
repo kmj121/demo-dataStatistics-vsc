@@ -9,7 +9,7 @@ public enum MessageCode {
 
     /** 个人信息不存在 */
     CODE_NO_PERSON(9001),
-    /** 该分钟内没有数据 */
+    /** 没有数据 */
     CODE_NO_DATA(9002),
 
     /** 系统异常 */
