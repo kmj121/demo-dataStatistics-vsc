@@ -2,18 +2,18 @@ package com.ssm.demo.entity;
 
 import java.util.Date;
 
-public class UserData {
+public class UdpData {
     private Integer id;
 
-    private String moduleid;
+    private String moduleId;
 
-    private Long recordtime;
+    private Long recordTime;
 
-    private Double sensorx;
+    private Integer sensorX;
 
-    private Double sensory;
+    private Integer sensorY;
 
-    private Double sensorz;
+    private Integer sensorZ;
 
     private Integer uvsensor0;
 
@@ -27,7 +27,9 @@ public class UserData {
 
     private Integer uvsensor5;
 
-    private Date createtime;
+    private Date createTime;
+
+    private Date updateTime;
 
     public Integer getId() {
         return id;
@@ -37,44 +39,44 @@ public class UserData {
         this.id = id;
     }
 
-    public String getModuleid() {
-        return moduleid;
+    public String getModuleId() {
+        return moduleId;
     }
 
-    public void setModuleid(String moduleid) {
-        this.moduleid = moduleid;
+    public void setModuleId(String moduleId) {
+        this.moduleId = moduleId;
     }
 
-    public Long getRecordtime() {
-        return recordtime;
+    public Long getRecordTime() {
+        return recordTime;
     }
 
-    public void setRecordtime(Long recordtime) {
-        this.recordtime = recordtime;
+    public void setRecordTime(Long recordTime) {
+        this.recordTime = recordTime;
     }
 
-    public Double getSensorx() {
-        return sensorx;
+    public Integer getSensorX() {
+        return sensorX;
     }
 
-    public void setSensorx(Double sensorx) {
-        this.sensorx = sensorx;
+    public void setSensorX(Integer sensorX) {
+        this.sensorX = sensorX;
     }
 
-    public Double getSensory() {
-        return sensory;
+    public Integer getSensorY() {
+        return sensorY;
     }
 
-    public void setSensory(Double sensory) {
-        this.sensory = sensory;
+    public void setSensorY(Integer sensorY) {
+        this.sensorY = sensorY;
     }
 
-    public Double getSensorz() {
-        return sensorz;
+    public Integer getSensorZ() {
+        return sensorZ;
     }
 
-    public void setSensorz(Double sensorz) {
-        this.sensorz = sensorz;
+    public void setSensorZ(Integer sensorZ) {
+        this.sensorZ = sensorZ;
     }
 
     public Integer getUvsensor0() {
@@ -125,11 +127,19 @@ public class UserData {
         this.uvsensor5 = uvsensor5;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

@@ -1,67 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ssm.demo.dao.UserDataMapper">
-  <resultMap id="BaseResultMap" type="com.ssm.demo.entity.UserData">
+<mapper namespace="com.ssm.demo.dao.UdpDataMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.demo.entity.UdpData">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="moduleId" jdbcType="VARCHAR" property="moduleid" />
-    <result column="recordTime" jdbcType="BIGINT" property="recordtime" />
-    <result column="sensorX" jdbcType="DOUBLE" property="sensorx" />
-    <result column="sensorY" jdbcType="DOUBLE" property="sensory" />
-    <result column="sensorZ" jdbcType="DOUBLE" property="sensorz" />
+    <result column="module_id" jdbcType="VARCHAR" property="moduleId" />
+    <result column="record_time" jdbcType="BIGINT" property="recordTime" />
+    <result column="sensor_x" jdbcType="INTEGER" property="sensorX" />
+    <result column="sensor_y" jdbcType="INTEGER" property="sensorY" />
+    <result column="sensor_z" jdbcType="INTEGER" property="sensorZ" />
     <result column="uvsensor0" jdbcType="INTEGER" property="uvsensor0" />
     <result column="uvsensor1" jdbcType="INTEGER" property="uvsensor1" />
     <result column="uvsensor2" jdbcType="INTEGER" property="uvsensor2" />
     <result column="uvsensor3" jdbcType="INTEGER" property="uvsensor3" />
     <result column="uvsensor4" jdbcType="INTEGER" property="uvsensor4" />
     <result column="uvsensor5" jdbcType="INTEGER" property="uvsensor5" />
-    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, moduleId, recordTime, sensorX, sensorY, sensorZ, uvsensor0, uvsensor1, uvsensor2, 
-    uvsensor3, uvsensor4, uvsensor5, createTime
+    id, module_id, record_time, sensor_x, sensor_y, sensor_z, uvsensor0, uvsensor1, uvsensor2, 
+    uvsensor3, uvsensor4, uvsensor5, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from user_data
+    from udp_data
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from user_data
+    delete from udp_data
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="com.ssm.demo.entity.UserData">
-    insert into user_data (id, moduleId, recordTime, 
-      sensorX, sensorY, sensorZ, 
+  <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="com.ssm.demo.entity.UdpData">
+    insert into udp_data (id, module_id, record_time, 
+      sensor_x, sensor_y, sensor_z, 
       uvsensor0, uvsensor1, uvsensor2, 
       uvsensor3, uvsensor4, uvsensor5, 
-      createTime)
-    values (#{id,jdbcType=INTEGER}, #{moduleid,jdbcType=VARCHAR}, #{recordtime,jdbcType=BIGINT}, 
-      #{sensorx,jdbcType=DOUBLE}, #{sensory,jdbcType=DOUBLE}, #{sensorz,jdbcType=DOUBLE}, 
+      create_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{moduleId,jdbcType=VARCHAR}, #{recordTime,jdbcType=BIGINT}, 
+      #{sensorX,jdbcType=INTEGER}, #{sensorY,jdbcType=INTEGER}, #{sensorZ,jdbcType=INTEGER}, 
       #{uvsensor0,jdbcType=INTEGER}, #{uvsensor1,jdbcType=INTEGER}, #{uvsensor2,jdbcType=INTEGER}, 
       #{uvsensor3,jdbcType=INTEGER}, #{uvsensor4,jdbcType=INTEGER}, #{uvsensor5,jdbcType=INTEGER}, 
-      #{createtime,jdbcType=TIMESTAMP})
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" keyProperty="id" useGeneratedKeys="true" parameterType="com.ssm.demo.entity.UserData">
-    insert into user_data
+  <insert id="insertSelective" keyProperty="id" useGeneratedKeys="true" parameterType="com.ssm.demo.entity.UdpData">
+    insert into udp_data
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="moduleid != null">
-        moduleId,
+      <if test="moduleId != null">
+        module_id,
       </if>
-      <if test="recordtime != null">
-        recordTime,
+      <if test="recordTime != null">
+        record_time,
       </if>
-      <if test="sensorx != null">
-        sensorX,
+      <if test="sensorX != null">
+        sensor_x,
       </if>
-      <if test="sensory != null">
-        sensorY,
+      <if test="sensorY != null">
+        sensor_y,
       </if>
-      <if test="sensorz != null">
-        sensorZ,
+      <if test="sensorZ != null">
+        sensor_z,
       </if>
       <if test="uvsensor0 != null">
         uvsensor0,
@@ -81,28 +82,31 @@
       <if test="uvsensor5 != null">
         uvsensor5,
       </if>
-      <if test="createtime != null">
-        createTime,
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="moduleid != null">
-        #{moduleid,jdbcType=VARCHAR},
+      <if test="moduleId != null">
+        #{moduleId,jdbcType=VARCHAR},
       </if>
-      <if test="recordtime != null">
-        #{recordtime,jdbcType=BIGINT},
+      <if test="recordTime != null">
+        #{recordTime,jdbcType=BIGINT},
       </if>
-      <if test="sensorx != null">
-        #{sensorx,jdbcType=DOUBLE},
+      <if test="sensorX != null">
+        #{sensorX,jdbcType=INTEGER},
       </if>
-      <if test="sensory != null">
-        #{sensory,jdbcType=DOUBLE},
+      <if test="sensorY != null">
+        #{sensorY,jdbcType=INTEGER},
       </if>
-      <if test="sensorz != null">
-        #{sensorz,jdbcType=DOUBLE},
+      <if test="sensorZ != null">
+        #{sensorZ,jdbcType=INTEGER},
       </if>
       <if test="uvsensor0 != null">
         #{uvsensor0,jdbcType=INTEGER},
@@ -122,28 +126,31 @@
       <if test="uvsensor5 != null">
         #{uvsensor5,jdbcType=INTEGER},
       </if>
-      <if test="createtime != null">
-        #{createtime,jdbcType=TIMESTAMP},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.demo.entity.UserData">
-    update user_data
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.demo.entity.UdpData">
+    update udp_data
     <set>
-      <if test="moduleid != null">
-        moduleId = #{moduleid,jdbcType=VARCHAR},
+      <if test="moduleId != null">
+        module_id = #{moduleId,jdbcType=VARCHAR},
       </if>
-      <if test="recordtime != null">
-        recordTime = #{recordtime,jdbcType=BIGINT},
+      <if test="recordTime != null">
+        record_time = #{recordTime,jdbcType=BIGINT},
       </if>
-      <if test="sensorx != null">
-        sensorX = #{sensorx,jdbcType=DOUBLE},
+      <if test="sensorX != null">
+        sensor_x = #{sensorX,jdbcType=INTEGER},
       </if>
-      <if test="sensory != null">
-        sensorY = #{sensory,jdbcType=DOUBLE},
+      <if test="sensorY != null">
+        sensor_y = #{sensorY,jdbcType=INTEGER},
       </if>
-      <if test="sensorz != null">
-        sensorZ = #{sensorz,jdbcType=DOUBLE},
+      <if test="sensorZ != null">
+        sensor_z = #{sensorZ,jdbcType=INTEGER},
       </if>
       <if test="uvsensor0 != null">
         uvsensor0 = #{uvsensor0,jdbcType=INTEGER},
@@ -163,26 +170,30 @@
       <if test="uvsensor5 != null">
         uvsensor5 = #{uvsensor5,jdbcType=INTEGER},
       </if>
-      <if test="createtime != null">
-        createTime = #{createtime,jdbcType=TIMESTAMP},
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ssm.demo.entity.UserData">
-    update user_data
-    set moduleId = #{moduleid,jdbcType=VARCHAR},
-      recordTime = #{recordtime,jdbcType=BIGINT},
-      sensorX = #{sensorx,jdbcType=DOUBLE},
-      sensorY = #{sensory,jdbcType=DOUBLE},
-      sensorZ = #{sensorz,jdbcType=DOUBLE},
+  <update id="updateByPrimaryKey" parameterType="com.ssm.demo.entity.UdpData">
+    update udp_data
+    set module_id = #{moduleId,jdbcType=VARCHAR},
+      record_time = #{recordTime,jdbcType=BIGINT},
+      sensor_x = #{sensorX,jdbcType=INTEGER},
+      sensor_y = #{sensorY,jdbcType=INTEGER},
+      sensor_z = #{sensorZ,jdbcType=INTEGER},
       uvsensor0 = #{uvsensor0,jdbcType=INTEGER},
       uvsensor1 = #{uvsensor1,jdbcType=INTEGER},
       uvsensor2 = #{uvsensor2,jdbcType=INTEGER},
       uvsensor3 = #{uvsensor3,jdbcType=INTEGER},
       uvsensor4 = #{uvsensor4,jdbcType=INTEGER},
       uvsensor5 = #{uvsensor5,jdbcType=INTEGER},
-      createTime = #{createtime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
@@ -190,4 +201,5 @@
     select * from user_data
     where recordTime >= #{begin} and #{end} > recordTime and moduleId = #{moduleId}
   </select>
+
 </mapper>
