@@ -198,8 +198,8 @@
   </update>
 
   <select id="query" resultMap="BaseResultMap">
-    select * from user_data
-    where recordTime >= #{begin} and #{end} > recordTime and moduleId = #{moduleId}
+    select * from udp_data
+    where record_time >= #{begin} and #{end} > record_time and module_id = #{moduleId}
   </select>
 
 </mapper>

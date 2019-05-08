@@ -13,13 +13,23 @@ import java.util.List;
  */
 public class DataStatisticsQueryDtoOut {
     @ApiModelProperty(value = "0：没有数据，1：户外运动，2：室内运动，3：户外静止，4：室内静止")
-    private List<Integer> status;
+    private Integer status;
+    @ApiModelProperty(value = "分钟数")
+    private long seconds;
 
-    public List<Integer> getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(List<Integer> status) {
+    public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public long getSeconds() {
+        return seconds;
+    }
+
+    public void setSeconds(long seconds) {
+        this.seconds = seconds;
     }
 }
