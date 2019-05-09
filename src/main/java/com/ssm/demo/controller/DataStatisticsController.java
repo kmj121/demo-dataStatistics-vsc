@@ -1,8 +1,6 @@
 package com.ssm.demo.controller;
 
-import com.google.common.io.ByteStreams;
 import com.ssm.demo.common.*;
-import com.ssm.demo.config.Config;
 import com.ssm.demo.dto.DataStatisticsQueryDto;
 import com.ssm.demo.dto.ExportDto;
 import com.ssm.demo.dto.ExportDtoOut;
@@ -11,7 +9,6 @@ import com.ssm.demo.service.AttachmentService;
 import com.ssm.demo.service.DataStatisticsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,9 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.*;
-import java.net.URLEncoder;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +50,7 @@ public class DataStatisticsController {
     @ApiOperation(value = "数据导出")
     @RequestMapping(value = "/export", method = RequestMethod.POST)
     @ResponseBody
-    public void export(HttpServletRequest request
+    public ResultObject export(HttpServletRequest request
             , HttpServletResponse response
             , @RequestBody @Valid ExportDto dto) throws IOException {
 
@@ -90,15 +84,9 @@ public class DataStatisticsController {
         String filename = attachmentService.genFileNameByExt(".csv");
         File file = attachmentService.getFile(filename);
         ExcelUtil.buildExcel(new FileOutputStream(file), null, titles, contents, "数据分析列表");
-        //ExportDtoOut exportDtoOut = new ExportDtoOut();
-        //exportDtoOut.setFileName(filename);
-        //exportDtoOut.setSaveName("数据分析列表.csv");
-        //return new ResultObject(MessageCode.CODE_SUCCESS, exportDtoOut);
-        //saveName = Util.encodeUriParam(saveName);
-        String mime = Files.probeContentType(Paths.get(Config.attachFolder + filename));
-        //saveName = StringUtils.isEmpty(saveName) ? filename : saveName;
-        response.setContentType(mime);
-        response.setHeader("Content-Dispositon", "attachment;filename=" + URLEncoder.encode("数据分析列表", "UTF-8"));
-        ByteStreams.copy(new FileInputStream(Config.attachFolder + filename), response.getOutputStream());
+        ExportDtoOut exportDtoOut = new ExportDtoOut();
+        exportDtoOut.setFileName(filename);
+        exportDtoOut.setSaveName("数据分析列表.csv");
+        return new ResultObject(MessageCode.CODE_SUCCESS, exportDtoOut);
     }
 }
