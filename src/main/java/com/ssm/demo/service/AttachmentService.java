@@ -1,5 +1,8 @@
 package com.ssm.demo.service;
 
+import com.ssm.demo.dao.AttachmentMapper;
+import com.ssm.demo.entity.Attachment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -8,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -22,8 +26,8 @@ import java.util.UUID;
 public class AttachmentService {
     @Value("${config.attachFolder}")
     private String attachFolder;
-//    @Autowired
-//    private AttachmentMapper attachmentMapper;
+    @Autowired
+    private AttachmentMapper attachmentMapper;
 
 
     /**
@@ -46,7 +50,7 @@ public class AttachmentService {
     }
 
     /**
-     * 根据文件名创建该文件
+     * 根据文件名和目录创建该文件
      * @param filename
      * @return
      */
@@ -62,28 +66,28 @@ public class AttachmentService {
      * @return
      * @throws IOException
      */
-//    public String txUpload(MultipartFile multipartFile) throws IOException {
-//        String filename = "";
-//        //保存文件
-//        filename = saveFile(multipartFile);
-//        //插入附件表
-//        addAttachment(filename, multipartFile);
-//        return filename;
-//    }
+    public String txUpload(MultipartFile multipartFile) throws IOException {
+        String filename = "";
+        //保存文件
+        filename = saveFile(multipartFile);
+        //插入附件表
+        addAttachment(filename, multipartFile);
+        return filename;
+    }
 
     /**
      * 附件信息插入附件表
      * @param filename
      * @param multipartFile
      */
-//    private void addAttachment(String filename, MultipartFile multipartFile) {
-//        Attachment attachment = new Attachment();
-//        attachment.setFilename(filename);
-//        attachment.setFilenameOriginal(multipartFile.getOriginalFilename());
-//        attachment.setMime(multipartFile.getContentType());
-//        attachment.setCreatedAt(new Date());
-//        attachmentMapper.insert(attachment);
-//    }
+    private void addAttachment(String filename, MultipartFile multipartFile) {
+        Attachment attachment = new Attachment();
+        attachment.setFilename(filename);
+        attachment.setFilenameOriginal(multipartFile.getOriginalFilename());
+        attachment.setMime(multipartFile.getContentType());
+        attachment.setCreatedAt(new Date());
+        attachmentMapper.insert(attachment);
+    }
 
     /**
      * 保存附件

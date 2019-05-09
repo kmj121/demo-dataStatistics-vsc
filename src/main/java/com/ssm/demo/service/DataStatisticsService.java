@@ -5,16 +5,15 @@ import com.ssm.demo.dao.DictMapper;
 import com.ssm.demo.dao.UdpDataMapper;
 import com.ssm.demo.dto.DataStatisticsQueryDto;
 import com.ssm.demo.dto.DataStatisticsQueryDtoOut;
-import com.ssm.demo.dto.DataStatisticsQueryListDtoOut;
 import com.ssm.demo.dto.ExportDto;
 import com.ssm.demo.entity.UdpData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -25,6 +24,7 @@ import java.util.Map;
  * @Date 2019/5/7
  */
 @Service
+@Transactional(isolation = Isolation.READ_COMMITTED)
 public class DataStatisticsService {
     @Autowired
     private DictMapper dictMapper;
