@@ -9,5 +9,5 @@ package com.ssm.demo.config;
  */
 public class Config {
     /** 附件保存位置 */
-    public static String attachFolder = "/Users/kanmeijie/GitHubProjects/attachment-in-projects/demo/attachments/";
+    public static String attachFolder = "E:/temp/";
 }
