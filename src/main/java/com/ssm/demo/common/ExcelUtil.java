@@ -103,7 +103,7 @@ public class ExcelUtil {
             //生成一个字体
             font2 = wb.createFont();
             font2.setFontHeightInPoints((short)10);
-            style.setFont(font2);
+            style2.setFont(font2);
             //设置样式
             style3 = wb.createCellStyle();
             style3.setBorderBottom(BorderStyle.THIN);

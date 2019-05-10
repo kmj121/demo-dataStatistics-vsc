@@ -5,7 +5,6 @@ import com.ssm.demo.dao.DictMapper;
 import com.ssm.demo.dao.UdpDataMapper;
 import com.ssm.demo.dto.DataStatisticsQueryDto;
 import com.ssm.demo.dto.DataStatisticsQueryDtoOut;
-import com.ssm.demo.dto.ExportDto;
 import com.ssm.demo.entity.UdpData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -81,7 +81,7 @@ public class DataStatisticsService {
             double[] z = new double[userDataList.size()];
             if (userDataList.size() < 30) {
                 dtoOut.setStatus(0);
-                dtoOut.setSeconds(time);
+                dtoOut.setMinute(time);
                 dtoOutList.add(dtoOut);
             } else {
                 //大于等于30，则基数为数据个数
@@ -125,7 +125,7 @@ public class DataStatisticsService {
                     }
                 }
                 //分钟数
-                dtoOut.setSeconds(time);
+                dtoOut.setMinute(time);
                 //将该对象添加到list中返回
                 dtoOutList.add(dtoOut);
             }
@@ -148,11 +148,11 @@ public class DataStatisticsService {
         return dVar / m;
     }
 
-    public List<UdpData> listExport(ExportDto dto) {
+    public List<UdpData> listExport(String moduleId, Date dayTime) {
         //日期（2019-01-01）转化为精确到秒的时间戳
-        long begin = dto.getDayTime().getTime() / 1000;
+        long begin = dayTime.getTime() / 1000;
         long end = begin + Constant.ONE_DAY_IN_SECOND;
-        List<UdpData> list = udpDataMapper.query(begin, end, dto.getModuleId());
+        List<UdpData> list = udpDataMapper.query(begin, end, moduleId);
         return list;
     }
 }
