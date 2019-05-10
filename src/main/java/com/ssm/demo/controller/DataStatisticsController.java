@@ -96,10 +96,8 @@ public class DataStatisticsController {
         //return new ResultObject(MessageCode.CODE_SUCCESS, exportDtoOut);
 
         String mime = Files.probeContentType(Paths.get(Config.attachFolder + filename));
-        //response.setCharacterEncoding("UTF-8");
         response.setContentType(mime);
         response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
-        //response.setHeader("Content-Disposition", "attachment;filename=数据.csv");
         ByteStreams.copy(new FileInputStream(Config.attachFolder + filename), response.getOutputStream());
     }
 }
