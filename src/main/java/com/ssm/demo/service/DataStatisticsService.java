@@ -49,9 +49,9 @@ public class DataStatisticsService {
         String sportData = dictMapper.getValue(Constant.SPORT_LABEL);
 
         long time = 0;
-        List<UdpData> userDataList = new ArrayList<>();
 
         for (long i = begin; i < end; i = i + 60) {
+            List<UdpData> userDataList = new ArrayList<>();
             time++;
 
 //            Map map = new HashMap<>();
@@ -59,12 +59,9 @@ public class DataStatisticsService {
 //            long count2 = 1;
             for (UdpData udpData : list) {
 
-                //获取每条数据的记录时间
-                long recordTime = udpData.getRecordTime();
-
                 //取出time分钟内对应的数据（time从一天的第一分钟开始到最后一分钟），放入到一个list集合中。
-                //将每分钟的数据放入到一个Map中。
-                if (recordTime >= i && recordTime < i + 60) {
+                //将每分钟的有效的数据放入到一个Map中。
+                if (udpData != null && udpData.getRecordTime() >= i && udpData.getRecordTime() < i + 60) {
                     userDataList.add(udpData);
                 }
 
@@ -104,11 +101,11 @@ public class DataStatisticsService {
                 //计算紫外线平均数
                 float average = sum / userDataList.size();
 
-                //如果任一方差大于阈值，则为运动，否则为静止
+                //如果任一标准差大于阈值，则为运动，否则为静止
                 Double parseDouble = Double.parseDouble(sportData);
                 //判断室内和室外
                 float parseFloat = Float.parseFloat(sunData);
-                if (varianceX > parseDouble || varianceY > parseDouble || varianceZ > parseDouble) {
+                if (Math.sqrt(varianceX) > parseDouble || Math.sqrt(varianceY) > parseDouble || Math.sqrt(varianceZ) > parseDouble) {
 
                     //大于平均数，则为户外，否则为室内
                     if (average > parseFloat) {
