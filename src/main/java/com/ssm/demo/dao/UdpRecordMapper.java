@@ -1,7 +1,11 @@
 package com.ssm.demo.dao;
 
 import com.ssm.demo.entity.UdpRecord;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
+@Component
+@Mapper
 public interface UdpRecordMapper {
     int deleteByPrimaryKey(Integer id);
 

@@ -1,7 +1,11 @@
 package com.ssm.demo.dao;
 
 import com.ssm.demo.entity.Attachment;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
+@Component
+@Mapper
 public interface AttachmentMapper {
     int deleteByPrimaryKey(Integer id);
 

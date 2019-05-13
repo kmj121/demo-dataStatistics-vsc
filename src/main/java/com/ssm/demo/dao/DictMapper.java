@@ -1,8 +1,12 @@
 package com.ssm.demo.dao;
 
 import com.ssm.demo.entity.Dict;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
+@Component
+@Mapper
 public interface DictMapper {
     int deleteByPrimaryKey(Integer id);
 
