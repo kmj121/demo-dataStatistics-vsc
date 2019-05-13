@@ -5,7 +5,6 @@ import com.google.common.io.ByteStreams;
 import com.ssm.demo.common.MessageCode;
 import com.ssm.demo.common.ResultObject;
 import com.ssm.demo.common.Util;
-import com.ssm.demo.config.Config;
 import com.ssm.demo.service.AttachmentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +12,7 @@ import io.swagger.annotations.ApiParam;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,6 +40,8 @@ import java.nio.file.Paths;
 public class AttachmentController {
     @Autowired
     private AttachmentService attachmentService;
+    @Value("${config.attachFolder}")
+    private String attachFolder;
 
     @ApiOperation(value = "上传附件")
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -57,10 +59,10 @@ public class AttachmentController {
             , @ApiParam(value = "保存文件名") @RequestParam(required = false) String saveName
             , HttpServletResponse response) throws IOException {
         saveName = Util.encodeUriParam(saveName);
-        String mime = Files.probeContentType(Paths.get(Config.attachFolder + filename));
+        String mime = Files.probeContentType(Paths.get(attachFolder + filename));
         saveName = StringUtils.isEmpty(saveName) ? filename : saveName;
         response.setContentType(mime);
         response.setHeader("Content-Dispositon", "attachment;filename=" + URLEncoder.encode(saveName, "UTF-8"));
-        ByteStreams.copy(new FileInputStream(Config.attachFolder + filename), response.getOutputStream());
+        ByteStreams.copy(new FileInputStream(attachFolder + filename), response.getOutputStream());
     }
 }

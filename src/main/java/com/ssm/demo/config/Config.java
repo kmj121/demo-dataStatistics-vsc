@@ -8,6 +8,4 @@ package com.ssm.demo.config;
  * @Date 2019/5/7
  */
 public class Config {
-    /** 附件保存位置 */
-    public static String attachFolder = "E:/temp/";
 }

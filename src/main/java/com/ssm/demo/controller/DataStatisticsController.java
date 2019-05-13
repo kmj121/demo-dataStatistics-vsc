@@ -2,7 +2,6 @@ package com.ssm.demo.controller;
 
 import com.google.common.io.ByteStreams;
 import com.ssm.demo.common.*;
-import com.ssm.demo.config.Config;
 import com.ssm.demo.dto.DataStatisticsQueryDto;
 import com.ssm.demo.dto.DataStatisticsQueryDtoOut;
 import com.ssm.demo.entity.UdpData;
@@ -12,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,6 +43,8 @@ public class DataStatisticsController {
     private DataStatisticsService dataStatisticsService;
     @Autowired
     private AttachmentService attachmentService;
+    @Value("${config.attachFolder}")
+    private String attachFolder;
 
     @ApiOperation(value = "数据查询")
     @RequestMapping(value = "/query", method = RequestMethod.POST)
@@ -95,9 +97,9 @@ public class DataStatisticsController {
         //exportDtoOut.setSaveName("数据分析列表.csv");
         //return new ResultObject(MessageCode.CODE_SUCCESS, exportDtoOut);
 
-        String mime = Files.probeContentType(Paths.get(Config.attachFolder + filename));
+        String mime = Files.probeContentType(Paths.get(attachFolder + filename));
         response.setContentType(mime);
         response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
-        ByteStreams.copy(new FileInputStream(Config.attachFolder + filename), response.getOutputStream());
+        ByteStreams.copy(new FileInputStream(attachFolder + filename), response.getOutputStream());
     }
 }
